@@ -1,0 +1,12 @@
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\Domain.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\Domain.pdb
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\FluentNHibernate.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\Iesi.Collections.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\NHibernate.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\FluentNHibernate.pdb
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\FluentNHibernate.xml
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\Iesi.Collections.xml
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Debug\NHibernate.xml
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\obj\Debug\Domain.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\obj\Debug\Domain.pdb

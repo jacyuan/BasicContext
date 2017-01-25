@@ -1,0 +1,12 @@
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\FluentMigrator.Runner.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\Migrate.exe
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\Database.dll.config
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\Database.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\Database.pdb
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\FluentMigrator.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\FluentMigrator.pdb
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\bin\Debug\FluentMigrator.xml
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\obj\Debug\Database.csprojResolveAssemblyReference.cache
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\obj\Debug\Database.dll
+c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\obj\Debug\Database.pdb
+C:\Users\ayuan\Documents\Visual Studio 2015\Projects\BasicContext\Database\bin\Debug\FluentMigrator.Runner.pdb
