@@ -30,6 +30,7 @@ namespace ApiTest.Infrastructure.Datebase
                 db.IsolationLevel = IsolationLevel.ReadCommitted;
                 db.BatchSize = 50;
                 db.ConnectionString = Configuration.ConnectionString;
+                db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
             });
 
             config.AddMappingsFromAssembly(typeof(Store).Assembly);

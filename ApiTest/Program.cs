@@ -1,13 +1,12 @@
-﻿using Database.Helper;
+﻿using ApiTest.Infrastructure;
+using ApiTest.Infrastructure.Config;
+using Database.Helper;
 using Domain.Domain;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
+using NHibernate;
 using NHibernate.Linq;
 using System;
-using System.Configuration;
 using System.Linq;
-using ApiTest.Infrastructure;
-using ApiTest.Infrastructure.Config;
-using NHibernate;
 
 namespace ApiTest
 {
