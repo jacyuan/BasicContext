@@ -6,6 +6,7 @@ using System;
 using System.Configuration;
 using System.Linq;
 using ApiTest.Infrastructure;
+using ApiTest.Infrastructure.Config;
 using NHibernate;
 
 namespace ApiTest
@@ -40,10 +41,10 @@ namespace ApiTest
 #if DEBUG
             NHibernateProfiler.Initialize();
 #endif
-            //            var connectionString = ConfigurationManager.ConnectionStrings["DESKTOP-FV5SJ2S"].ConnectionString;
-            var connectionString = ConfigurationManager.ConnectionStrings["PORT-DOTN-21"].ConnectionString;
 
-            MigratorRunner.MigrateToLatest(connectionString);
+            var connectionString = IoC.Resolve<IDatabaseConfiguration>();
+
+            MigratorRunner.MigrateToLatest(connectionString.ConnectionString);
         }
     }
 }

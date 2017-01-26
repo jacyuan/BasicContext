@@ -2,9 +2,9 @@
 
 namespace Database.Helper
 {
-    public static class MigrationHelper
+    public static class MigrationExtension
     {
-        public static ICreateTableWithColumnOrSchemaOrDescriptionSyntax WithIdColumn(this ICreateTableWithColumnSyntax create)
+        public static ICreateTableColumnOptionOrWithColumnSyntax WithIdColumn(this ICreateTableWithColumnSyntax create)
         {
             return create.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity();
         }

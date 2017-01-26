@@ -22,7 +22,7 @@ namespace Database.Helper
 
             var migrationContext = new RunnerContext(announcer)
             {
-                Namespace = "Database"
+
             };
 
             var options = new MigrationOptions { PreviewOnly = false, Timeout = 0 };
