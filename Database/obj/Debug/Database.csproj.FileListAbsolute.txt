@@ -10,3 +10,15 @@ c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\obj\D
 c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\obj\Debug\Database.dll
 c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Database\obj\Debug\Database.pdb
 C:\Users\ayuan\Documents\Visual Studio 2015\Projects\BasicContext\Database\bin\Debug\FluentMigrator.Runner.pdb
+C:\Optim\BasicContext\Database\bin\Debug\FluentMigrator.Runner.dll
+C:\Optim\BasicContext\Database\bin\Debug\Migrate.exe
+C:\Optim\BasicContext\Database\bin\Debug\Database.dll.config
+C:\Optim\BasicContext\Database\bin\Debug\Database.dll
+C:\Optim\BasicContext\Database\bin\Debug\Database.pdb
+C:\Optim\BasicContext\Database\bin\Debug\FluentMigrator.dll
+C:\Optim\BasicContext\Database\bin\Debug\FluentMigrator.pdb
+C:\Optim\BasicContext\Database\bin\Debug\FluentMigrator.xml
+C:\Optim\BasicContext\Database\bin\Debug\FluentMigrator.Runner.pdb
+C:\Optim\BasicContext\Database\obj\Debug\Database.csprojResolveAssemblyReference.cache
+C:\Optim\BasicContext\Database\obj\Debug\Database.dll
+C:\Optim\BasicContext\Database\obj\Debug\Database.pdb

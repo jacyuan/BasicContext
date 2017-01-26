@@ -1,5 +1,4 @@
-﻿using FluentMigrator.Builders.Create;
-using FluentMigrator.Builders.Create.Table;
+﻿using FluentMigrator.Builders.Create.Table;
 
 namespace Database.Helper
 {

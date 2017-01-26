@@ -10,3 +10,15 @@ c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\bin\Deb
 c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
 c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\obj\Debug\Domain.dll
 c:\users\ayuan\documents\visual studio 2015\Projects\BasicContext\Domain\obj\Debug\Domain.pdb
+C:\Optim\BasicContext\Domain\bin\Debug\Domain.dll
+C:\Optim\BasicContext\Domain\bin\Debug\Domain.pdb
+C:\Optim\BasicContext\Domain\bin\Debug\FluentNHibernate.dll
+C:\Optim\BasicContext\Domain\bin\Debug\Iesi.Collections.dll
+C:\Optim\BasicContext\Domain\bin\Debug\NHibernate.dll
+C:\Optim\BasicContext\Domain\bin\Debug\FluentNHibernate.pdb
+C:\Optim\BasicContext\Domain\bin\Debug\FluentNHibernate.xml
+C:\Optim\BasicContext\Domain\bin\Debug\Iesi.Collections.xml
+C:\Optim\BasicContext\Domain\bin\Debug\NHibernate.xml
+C:\Optim\BasicContext\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Optim\BasicContext\Domain\obj\Debug\Domain.dll
+C:\Optim\BasicContext\Domain\obj\Debug\Domain.pdb

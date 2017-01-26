@@ -19,15 +19,14 @@ namespace ApiTest
             using (var session = sessionFactory.OpenSession())
             {
                 var s = new Store { Name = "Store 1" };
-                var emp = new Employee { Store = s, Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
-
+                var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
+                s.AddEmployee(emp);
                 session.Save(s);
-                session.Save(emp);
 
                 var employees = session.Query<Employee>()
                     .ToList();
 
-
+                employees.ForEach(Console.WriteLine);
             }
 
             Console.WriteLine();
@@ -39,7 +38,8 @@ namespace ApiTest
 #if DEBUG
             NHibernateProfiler.Initialize();
 #endif
-            var connectionString = ConfigurationManager.ConnectionStrings["DESKTOP-FV5SJ2S"].ConnectionString;
+//            var connectionString = ConfigurationManager.ConnectionStrings["DESKTOP-FV5SJ2S"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["PORT-DOTN-21"].ConnectionString;
 
             MigratorRunner.MigrateToLatest(connectionString);
         }

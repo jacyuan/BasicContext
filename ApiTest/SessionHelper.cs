@@ -25,7 +25,8 @@ namespace ApiTest
                  db.Dialect<MsSql2012Dialect>();
                  db.IsolationLevel = IsolationLevel.ReadCommitted;
                  db.BatchSize = 50;
-                 db.ConnectionString = ConfigurationManager.ConnectionStrings["DESKTOP-FV5SJ2S"].ConnectionString;
+//                 db.ConnectionString = ConfigurationManager.ConnectionStrings["DESKTOP-FV5SJ2S"].ConnectionString;
+                 db.ConnectionString = ConfigurationManager.ConnectionStrings["PORT-DOTN-21"].ConnectionString;
              });
 
             config.AddMappingsFromAssembly(typeof(Store).Assembly);
