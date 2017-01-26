@@ -1,10 +1,12 @@
 ﻿using Database.Helper;
+using Domain.Domain;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
+using NHibernate.Linq;
 using System;
 using System.Configuration;
 using System.Linq;
-using Domain.Domain;
-using NHibernate.Linq;
+using ApiTest.Infrastructure;
+using NHibernate;
 
 namespace ApiTest
 {
@@ -14,7 +16,7 @@ namespace ApiTest
         {
             ConfigProject();
 
-            var sessionFactory = SessionHelper.GestSessionFactory();
+            var sessionFactory = IoC.Resolve<ISessionFactory>();
 
             using (var session = sessionFactory.OpenSession())
             {
@@ -38,7 +40,7 @@ namespace ApiTest
 #if DEBUG
             NHibernateProfiler.Initialize();
 #endif
-//            var connectionString = ConfigurationManager.ConnectionStrings["DESKTOP-FV5SJ2S"].ConnectionString;
+            //            var connectionString = ConfigurationManager.ConnectionStrings["DESKTOP-FV5SJ2S"].ConnectionString;
             var connectionString = ConfigurationManager.ConnectionStrings["PORT-DOTN-21"].ConnectionString;
 
             MigratorRunner.MigrateToLatest(connectionString);
