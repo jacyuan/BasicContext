@@ -12,6 +12,7 @@ namespace Domain.Domain
         public virtual string Name { get; set; }
         public virtual IEnumerable<Employee> Employees { get; set; }
         public virtual IEnumerable<Product> Products { get; set; }
+        public virtual Address Address { get; set; }
 
         public virtual void AddEmployee(Employee emp)
         {
@@ -111,10 +112,13 @@ namespace Domain.Domain
                       km.NotNullable(true);
                   });
                   cm.Cascade(Cascade.All);
-              }, m => m.ManyToMany(mm =>
+              }, 
+              m => m.ManyToMany(mm =>
               {
                   mm.Column("Product_id");
               }));
+
+            Component(x=>x.Address);
 
             DynamicUpdate(true);
         }

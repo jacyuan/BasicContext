@@ -24,7 +24,14 @@ namespace ApiTest
                 {
                     session.CreateSQLQuery("delete from Employee;delete from Store;delete from Product;delete from Store_product;").ExecuteUpdate();
 
-                    var store = new Store { Name = "Store 1" };
+                    var address = new Address
+                    {
+                        Country = "France",
+                        Street = "Av St-Priest",
+                        StreetNumber = 10,
+                        ZipCode = "34000"
+                    };
+                    var store = new Store { Name = "Store 1", Address = address };
 
                     var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
                     store.AddEmployee(emp);
