@@ -31,6 +31,9 @@ namespace ApiTest
 
                     session.Save(store);
 
+                    var suger = new Product { Name = "Suger" };
+                    session.Save(suger);
+
                     var employees = session.Query<Employee>()
                         .ToList();
 
