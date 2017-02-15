@@ -24,16 +24,17 @@ namespace ApiTest
                 {
                     session.CreateSQLQuery("delete from Employee;delete from Store;").ExecuteUpdate();
 
-                    var s = new Store { Name = "Store 1" };
-                    var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man, Store = s };
-                    //                    //                s.AddEmployee(emp);
-                    session.Save(s);
-                    session.Save(emp);
-                    //
-                    //                    var employees = session.Query<Employee>()
-                    //                        .ToList();
-                    //
-                    //                    employees.ForEach(Console.WriteLine);
+                    var store = new Store { Name = "Store 1" };
+                    var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
+
+                    store.AddEmployee(emp);
+
+                    session.Save(store);
+
+                    var employees = session.Query<Employee>()
+                        .ToList();
+
+                    employees.ForEach(Console.WriteLine);
                     trans.Commit();
                 }
             }

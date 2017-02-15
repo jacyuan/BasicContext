@@ -14,10 +14,10 @@ namespace Domain.Domain
         public override string ToString()
         {
             var txt = new StringBuilder();
-            txt.Append($"{Name} {Gender} {Age}");
+            txt.Append("Employee : ").AppendLine().Append($"{Name}, {Gender}, {Age} years old");
 
             if (Store != null)
-                txt.Append($" {Store.Name}");
+                txt.Append($", works in {Store.Name} store");
 
             return txt.ToString();
         }
