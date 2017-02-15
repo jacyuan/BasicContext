@@ -22,28 +22,37 @@ namespace ApiTest
             {
                 using (var trans = session.BeginTransaction())
                 {
-                    session.CreateSQLQuery("delete from Employee;delete from Store;").ExecuteUpdate();
+                    session.CreateSQLQuery("delete from Employee;delete from Store;delete from Product;delete from Store_product;").ExecuteUpdate();
 
                     var store = new Store { Name = "Store 1" };
+
                     var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
-
                     store.AddEmployee(emp);
-
-                    session.Save(store);
 
                     var suger = new Product { Name = "Suger" };
                     session.Save(suger);
 
-                    var employees = session.Query<Employee>()
-                        .ToList();
+                    var flavor = new Product { Name = "Flavor" };
+                    session.Save(flavor);
 
-                    employees.ForEach(Console.WriteLine);
+                    store.AddProduct(suger);
+                    store.AddProduct(flavor);
+
+                    session.Save(store);
+
+                    store = session.Query<Store>()
+                        .Where(x => x.Name == "Store 1")
+                        .FirstOrDefault();
+
+                    store.RemoveEmployee(store.Employees.FirstOrDefault());
+                    store.RemoveProduct(store.Products.First());
+
                     trans.Commit();
                 }
             }
 
-            Console.WriteLine();
-            Console.ReadKey();
+            Console.WriteLine("finished ...");
+            Console.ReadLine();
         }
 
         private static void EnableProfilerAndRunMigrations()

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Helper\MigrationExtension.cs" />
     <Compile Include="Helper\MigratorRunner.cs" />
+    <Compile Include="Migration\Mig_201702151448_AddStoreProductRelationTable.cs" />
     <Compile Include="Migration\Mig_201702151446_AddProductTable.cs" />
     <Compile Include="Migration\Mig_201701251923_AddGenderEnumTable.cs" />
     <Compile Include="Migration\Mig_201701251924_AddEmployeeTable.cs" />

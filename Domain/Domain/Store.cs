@@ -2,6 +2,7 @@
 using NHibernate.Mapping.ByCode.Conformist;
 using System.Collections.Generic;
 using System.Linq;
+using FluentNHibernate.Utils;
 using NHibernate.Util;
 
 namespace Domain.Domain
@@ -10,6 +11,7 @@ namespace Domain.Domain
     {
         public virtual string Name { get; set; }
         public virtual IEnumerable<Employee> Employees { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
 
         public virtual void AddEmployee(Employee emp)
         {
@@ -34,6 +36,45 @@ namespace Domain.Domain
             employees.ForEach(AddEmployee);
         }
 
+        public virtual void RemoveEmployee(Employee emp)
+        {
+            if (emp == null || Employees == null || !Employees.Any() || !Employees.Contains(emp))
+                return;
+
+            Employees = Employees.Where(x => x.Id != emp.Id).ToArray();
+            emp.Store = null;
+        }
+
+        public virtual void AddProduct(Product prod)
+        {
+            if (prod == null)
+                return;
+
+            if (Products == null)
+                Products = new Product[] { };
+
+            if (Products.Contains(prod))
+                return;
+
+            Products = Products.Concat(new[] { prod });
+        }
+
+        public virtual void AddProducts(IEnumerable<Product> prods)
+        {
+            var products = prods as Product[] ?? prods.ToArray();
+            if (prods == null || !products.Any()) return;
+
+            products.ForEach(AddProduct);
+        }
+
+        public virtual void RemoveProduct(Product prod)
+        {
+            if (prod == null || Products == null || !Products.Any() || !Products.Contains(prod))
+                return;
+
+            Products = Products.Except(prod);
+        }
+
         public override string ToString()
         {
             return $"{Name}";
@@ -45,7 +86,10 @@ namespace Domain.Domain
         public StoreMap()
         {
             Id(x => x.Id, map => map.Generator(Generators.Identity));
-            Property(x => x.Name);
+
+            //not necessary
+            //Property(x => x.Name);
+
             Bag(x => x.Employees, cm =>
               {
                   //                  cm.Access(Accessor.Field);
@@ -57,6 +101,21 @@ namespace Domain.Domain
                   cm.Cascade(Cascade.All);
                   cm.Inverse(true);
               }, m => m.OneToMany());
+
+            Bag(x => x.Products, cm =>
+              {
+                  cm.Table("Store_product");
+                  cm.Key(km =>
+                  {
+                      km.Column("Store_id");
+                      km.NotNullable(true);
+                  });
+                  cm.Cascade(Cascade.All);
+              }, m => m.ManyToMany(mm =>
+              {
+                  mm.Column("Product_id");
+              }));
+
             DynamicUpdate(true);
         }
     }

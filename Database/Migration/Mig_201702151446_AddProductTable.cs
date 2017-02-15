@@ -10,7 +10,7 @@ namespace Database
         {
             Create.Table("Product")
                 .WithIdColumn()
-                .WithColumn("Name").AsString(100).NotNullable();
+                .WithColumn("Name").AsString(100).NotNullable().Unique();
         }
     }
 }

@@ -59,9 +59,11 @@ namespace Domain.Domain
         public EmployeeMap()
         {
             Id(x => x.Id, map => map.Generator(Generators.Identity));
-            Property(x => x.Name);
-            Property(x => x.Age);
-            Property(x => x.Gender);
+
+            //not necessary
+            //            Property(x => x.Name);
+            //            Property(x => x.Age);
+            //            Property(x => x.Gender);
 
             ManyToOne(x => x.Store, mom =>
             {
