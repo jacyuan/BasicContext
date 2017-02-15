@@ -22,39 +22,43 @@ namespace ApiTest
             {
                 using (var trans = session.BeginTransaction())
                 {
-                    //                    session.CreateSQLQuery("delete from Employee;delete from Store;delete from Product;delete from Store_product;").ExecuteUpdate();
-                    //
-                    //                    var address = new Address
-                    //                    {
-                    //                        Country = "France",
-                    //                        Street = "Av St-Priest",
-                    //                        StreetNumber = 10,
-                    //                        ZipCode = "34000"
-                    //                    };
-                    //                    var store = new Store { Name = "Store 1", Address = address };
-                    //
-                    //                    var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
-                    //                    store.AddEmployee(emp);
-                    //
-                    //                    var suger = new Product { Name = "Suger" };
-                    //                    session.Save(suger);
-                    //
-                    //                    var flavor = new Product { Name = "Flavor" };
-                    //                    session.Save(flavor);
-                    //
-                    //                    store.AddProduct(suger);
-                    //                    store.AddProduct(flavor);
-                    //
-                    //                    session.Save(store);
+                    session.CreateSQLQuery("delete from Employee;delete from Store;delete from Product;delete from Store_product;").ExecuteUpdate();
 
-                    var store = session.Query<Store>().FirstOrDefault(x => x.Name == "Store 1");
-
-                    if (store != null)
+                    var address = new Address
                     {
-                        store.RemoveEmployee(store.Employees.FirstOrDefault());
-                        store.RemoveProduct(store.Products.First());
-                        store.Address.StreetNumber = 20;
-                    }
+                        Country = "France",
+                        Street = "Av St-Priest",
+                        StreetNumber = 10,
+                        ZipCode = "34000"
+                    };
+                    var store = new Store { Name = "Store 1", Address = address };
+
+                    var emp1 = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
+                    store.AddEmployee(emp1);
+                    var emp2 = new Employee { Name = "test", Age = 30, Gender = GenderEnum.Woman };
+                    session.Save(emp2);
+
+                    var suger = new Product { Name = "Suger" };
+                    session.Save(suger);
+
+                    var flavor = new Product { Name = "Flavor" };
+                    session.Save(flavor);
+
+                    store.AddProduct(suger);
+                    store.AddProduct(flavor);
+
+                    session.Save(store);
+
+                    //                    var store = session.Query<Store>().FirstOrDefault(x => x.Name == "Store 1");
+                    //
+                    //                    if (store != null)
+                    //                    {
+                    //                        store.RemoveEmployee(store.Employees.FirstOrDefault());
+                    //                        store.RemoveProduct(store.Products.First());
+                    //                        store.Address.StreetNumber = 20;
+                    //                    }
+
+                    var emp = session.Query<Employee>().ToList();
 
                     trans.Commit();
                 }
