@@ -1,6 +1,6 @@
-﻿using System.Text;
-using NHibernate.Mapping.ByCode;
+﻿using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
+using System.Text;
 
 namespace Domain.Domain
 {
@@ -43,10 +43,19 @@ namespace Domain.Domain
                 //                mom.Lazy(LazyRelation.Proxy);
             });
 
+            //forumula test
             Property(x => x.Employeed, map =>
-              {
-                  map.Formula("ISNULL(Store_id, 0)");
-              });
+            {
+                map.Formula("ISNULL(Store_id, 0)");
+            });
+
+            Discriminator(dm =>
+            {
+                dm.Column("EmployeeType");
+                dm.NotNullable(true);
+            });
+
+            DiscriminatorValue(EmployeeTypeEnum.Employee);
         }
     }
 }

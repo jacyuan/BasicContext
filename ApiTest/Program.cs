@@ -33,10 +33,12 @@ namespace ApiTest
                     };
                     var store = new Store { Name = "Store 1", Address = address };
 
-                    var emp1 = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
+                    var emp1 = new StoreOwner { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
                     store.AddEmployee(emp1);
                     var emp2 = new Employee { Name = "test", Age = 30, Gender = GenderEnum.Woman };
                     session.Save(emp2);
+                    var emp3 = new StockHolder{ Name = "test1", Age = 40, Gender = GenderEnum.Woman };
+                    session.Save(emp3);
 
                     var suger = new Product { Name = "Suger" };
                     session.Save(suger);
