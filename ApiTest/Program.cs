@@ -14,28 +14,35 @@ namespace ApiTest
     {
         private static void Main(string[] args)
         {
-            ConfigProject();
+            EnableProfilerAndRunMigrations();
 
             var sessionFactory = IoC.Resolve<ISessionFactory>();
 
             using (var session = sessionFactory.OpenSession())
             {
-                var s = new Store { Name = "Store 1" };
-                var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
-                s.AddEmployee(emp);
-                session.Save(s);
+                using (var trans = session.BeginTransaction())
+                {
+                    session.CreateSQLQuery("delete from Employee;delete from Store;").ExecuteUpdate();
 
-                var employees = session.Query<Employee>()
-                    .ToList();
-
-                employees.ForEach(Console.WriteLine);
+                    var s = new Store { Name = "Store 1" };
+                    var emp = new Employee { Name = "Yuan", Age = 30, Gender = GenderEnum.Man, Store = s };
+                    //                    //                s.AddEmployee(emp);
+                    session.Save(s);
+                    session.Save(emp);
+                    //
+                    //                    var employees = session.Query<Employee>()
+                    //                        .ToList();
+                    //
+                    //                    employees.ForEach(Console.WriteLine);
+                    trans.Commit();
+                }
             }
 
             Console.WriteLine();
             Console.ReadKey();
         }
 
-        private static void ConfigProject()
+        private static void EnableProfilerAndRunMigrations()
         {
 #if DEBUG
             NHibernateProfiler.Initialize();

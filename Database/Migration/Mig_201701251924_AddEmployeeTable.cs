@@ -14,7 +14,7 @@ namespace Database
                 .WithColumn("Age").AsInt32().Nullable()
                 .WithColumn("Gender").AsInt32().NotNullable()
                 .ForeignKey("FK_Employee_GenderEnum", "GenderEnum", "Id")
-                .WithColumn("Store_id").AsInt32().NotNullable()
+                .WithColumn("Store_id").AsInt32().Nullable()
                 .ForeignKey("FK_Employee_Store", "Store", "Id");
         }
 

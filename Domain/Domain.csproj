@@ -43,9 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Employee.cs" />
+    <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\GenderEnum.cs" />
     <Compile Include="Domain\Store.cs" />
-    <Compile Include="Mapping\Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

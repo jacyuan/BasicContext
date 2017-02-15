@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\AssignableExtensions.cs" />
     <Compile Include="Infrastructure\Config\AppConfiguration.cs" />
     <Compile Include="Infrastructure\Config\IDatabaseConfiguration.cs" />
     <Compile Include="Infrastructure\Datebase\NHibernateModule.cs" />
