@@ -118,8 +118,15 @@ namespace Domain.Domain
                   mm.Column("Product_id");
               }));
 
-            //not necessary to go further for inner mapping of Address
-            Component(x => x.Address);
+            
+            Component(x => x.Address, map =>
+            {
+                //not necessary to go further for inner mapping of Address
+                map.Property(m => m.Country);
+                map.Property(m => m.StreetNumber);
+                map.Property(m => m.Street);
+                map.Property(m => m.ZipCode);
+            });
 
             DynamicUpdate(true);
         }

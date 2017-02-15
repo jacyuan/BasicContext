@@ -48,8 +48,7 @@ namespace ApiTest
                     session.Save(store);
 
                     store = session.Query<Store>()
-                        .Where(x => x.Name == "Store 1")
-                        .FirstOrDefault();
+                        .FirstOrDefault(x => x.Name == "Store 1");
 
                     store.RemoveEmployee(store.Employees.FirstOrDefault());
                     store.RemoveProduct(store.Products.First());
