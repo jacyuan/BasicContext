@@ -112,13 +112,14 @@ namespace Domain.Domain
                       km.NotNullable(true);
                   });
                   cm.Cascade(Cascade.All);
-              }, 
+              },
               m => m.ManyToMany(mm =>
               {
                   mm.Column("Product_id");
               }));
 
-            Component(x=>x.Address);
+            //not necessary to go further for inner mapping of Address
+            Component(x => x.Address);
 
             DynamicUpdate(true);
         }
