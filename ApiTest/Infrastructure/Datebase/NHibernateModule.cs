@@ -11,8 +11,6 @@ using NHibernate.Dialect;
 using NHibernate.Mapping.ByCode;
 using System.Data;
 using System.Linq;
-using NHibernate.Cfg.MappingSchema;
-using NHibernate.Mapping.ByCode.Conformist;
 using NHibernate.Util;
 
 namespace ApiTest.Infrastructure.Datebase
@@ -20,6 +18,9 @@ namespace ApiTest.Infrastructure.Datebase
     public class NHibernateModule : Module
     {
         public AppConfiguration Configuration { get; set; }
+
+        private static readonly Func<Type, bool> IsRootEntityCondition = t => t.BaseType == typeof(Entity);
+        private static readonly Func<Type, bool> IsEntityCondition = t => typeof(Entity).IsAssignableFrom(t);
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -48,65 +49,64 @@ namespace ApiTest.Infrastructure.Datebase
 
         private static void AddMappings(Configuration config)
         {
-            var mapper = new ConventionModelMapper();
-
-            Func<Type, bool> isRootEntityCondition = t => t.BaseType == typeof(Entity);
-            Func<Type, bool> isEntityCondition = t => !isRootEntityCondition(t) && typeof(Entity).IsAssignableFrom(t);
-
-            mapper.IsRootEntity((type, declared) => isRootEntityCondition(type));
-            mapper.IsEntity((type, declared) => isEntityCondition(type));
-            mapper.IsTablePerClassHierarchy((type, b) => type == typeof(Employee));
-
-            ////for all types defined inside the domain assembly
-            //var customTypes = typeof(Employee).Assembly.GetTypes()
-            //    //get only those mapping classes
-            //    .Where(x => x.IsAssignableToGenericType(typeof(ClassMapping<>)) || x.IsAssignableToGenericType(typeof(SubclassMapping<>)))
-            //    .ToArray();
-
-            //mapper.AddMappings(customTypes);
-
-            //var mappings = mapper.CompileMappingForAllExplicitlyAddedEntities();
-
-            //config.AddMapping(mappings);
-
             var allEntityMapTypes = typeof(Employee).Assembly.GetExportedTypes();
 
-            //            var entityTypeMapDico = allEntityMapTypes
-            //                .Where(x => typeof(IEntityAttributesMapper).IsAssignableFrom(x))
-            //                .ToDictionary(x => x.BaseType.GenericTypeArguments[0], x => x);
-            //
-            //            entityTypeMapDico.ForEach(typeMapping =>
-            //            {
-            //                var type = typeMapping.Key;
-            //                var mapping = typeMapping.Value;
-            //
-            //            });
+            var entityTypeMapDico = allEntityMapTypes
+                //for all mapping classes
+                .Where(x => typeof(IEntityAttributesMapper).IsAssignableFrom(x))
+                //build a dico with 
+                // key      : original entity type
+                // value    : mapping class
+                .ToDictionary(x => x.BaseType.GenericTypeArguments[0], x => x);
 
-            mapper.AddMappings(allEntityMapTypes);
+            var mapper = new ConventionModelMapper();
+            mapper.IsRootEntity((type, declared) => IsRootEntityCondition(type));
+            mapper.IsEntity((type, declared) => IsEntityCondition(type));
 
-            //            if (allEntityTypes == null)
-            //                throw new ArgumentNullException("types");
-            //            HashSet<Type> typeToMap = new HashSet<Type>(allEntityTypes);
-            //            foreach (Type type in this.RootClasses((IEnumerable<Type>)typeToMap))
-            //            {
-            //                HbmMapping mapping = this.NewHbmMapping(type.Assembly.GetName().Name, type.Namespace);
-            //                this.MapRootClass(type, mapping);
-            //                yield return mapping;
-            //            }
-            //            foreach (Type type in this.Subclasses((IEnumerable<Type>)typeToMap))
-            //            {
-            //                HbmMapping mapping = this.NewHbmMapping(type.Assembly.GetName().Name, type.Namespace);
-            //                this.AddSubclassMapping(mapping, type);
-            //                yield return mapping;
-            //            }
-
+            AddClassMappingsByInheritanceOrder(mapper, entityTypeMapDico, null, IsRootEntityCondition);
 
             var mappings = mapper.CompileMappingForEachExplicitlyAddedEntity();
 
-            foreach (var mapping in mappings)
+            mappings.ForEach(config.AddMapping);
+        }
+
+        private static void AddClassMappingsByInheritanceOrder(ConventionModelMapper mapper, IDictionary<Type, Type> entityTypesAndMappingToAdd, Type[] justAddedParentTypes = null, Func<Type, bool> isRootEntity = null)
+        {
+            #region arg exception
+
+            if (mapper == null)
+                throw new ArgumentNullException(nameof(mapper));
+
+            //if nothing has been added to mapper yet
+            if ((justAddedParentTypes == null || !justAddedParentTypes.Any())
+                && isRootEntity == null)
             {
-                config.AddMapping(mapping);
+                throw new ArgumentNullException(nameof(isRootEntity));
             }
+
+            #endregion
+
+            //stop condition : if nothing left to add, quit
+            if (entityTypesAndMappingToAdd == null || !entityTypesAndMappingToAdd.Any())
+                return;
+
+            var shouldBeAdded = isRootEntity;
+
+            if (justAddedParentTypes != null && justAddedParentTypes.Any())
+            {
+                shouldBeAdded = x => justAddedParentTypes.Contains(x.BaseType);
+            }
+
+            var entitesToAdd = entityTypesAndMappingToAdd.Keys.Where(shouldBeAdded).ToArray();
+
+            mapper.AddMappings(entityTypesAndMappingToAdd.Where(x => entitesToAdd.Contains(x.Key)).Select(x => x.Value));
+
+            //recursive
+            AddClassMappingsByInheritanceOrder(
+                mapper,
+                entityTypesAndMappingToAdd.Where(kv => !entitesToAdd.Contains(kv.Key)).ToDictionary(x => x.Key, x => x.Value),
+                entitesToAdd
+           );
         }
     }
 }

@@ -62,6 +62,8 @@ namespace ApiTest
 
                     var emp = session.Query<Employee>().ToList();
 
+                    emp.ForEach(x => Console.WriteLine(x.ToString()));
+
                     trans.Commit();
                 }
             }
