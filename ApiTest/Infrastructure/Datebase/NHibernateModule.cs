@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using ApiTest.Helpers;
-using ApiTest.Infrastructure.Config;
+﻿using ApiTest.Infrastructure.Config;
 using Autofac;
 using Domain.Domain;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Dialect;
 using NHibernate.Mapping.ByCode;
+using NHibernate.Util;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using NHibernate.Util;
 
 namespace ApiTest.Infrastructure.Datebase
 {
@@ -51,7 +49,7 @@ namespace ApiTest.Infrastructure.Datebase
         {
             var allEntityMapTypes = typeof(Employee).Assembly.GetExportedTypes();
 
-            //build a dico with 
+            //build a dico with
             // key      : original entity type
             // value    : mapping class
             var entityTypeMapDico = allEntityMapTypes
@@ -89,7 +87,7 @@ namespace ApiTest.Infrastructure.Datebase
                 throw new ArgumentNullException(nameof(isRootEntity));
             }
 
-            #endregion
+            #endregion arg exception
 
             //resharper proposes to use while(true) instead of recursive loops
             while (entityClassesAndMappingsToAdd != null && entityClassesAndMappingsToAdd.Any())

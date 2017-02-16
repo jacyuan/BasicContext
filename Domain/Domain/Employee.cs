@@ -4,6 +4,8 @@ using System.Text;
 
 namespace Domain.Domain
 {
+    //single table hierarchy, based on discriminator
+    //Entity <- Employee <- StoreOwner <- StockHolder
     public class Employee : Entity
     {
         public virtual string Name { get; set; }

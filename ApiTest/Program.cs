@@ -31,6 +31,7 @@ namespace ApiTest
                         StreetNumber = 10,
                         ZipCode = "34000"
                     };
+
                     var store = new Store { Name = "Store 1", Address = address };
 
                     var emp1 = new StoreOwner { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
@@ -53,6 +54,10 @@ namespace ApiTest
 
                     session.Save(store);
 
+                    var emp = session.Query<Employee>().ToList();
+
+                    emp.ForEach(x => Console.WriteLine(x.ToString()));
+
                     //                    var store = session.Query<Store>().FirstOrDefault(x => x.Name == "Store 1");
                     //
                     //                    if (store != null)
@@ -61,10 +66,6 @@ namespace ApiTest
                     //                        store.RemoveProduct(store.Products.First());
                     //                        store.Address.StreetNumber = 20;
                     //                    }
-
-                    var emp = session.Query<Employee>().ToList();
-
-                    emp.ForEach(x => Console.WriteLine(x.ToString()));
 
                     trans.Commit();
                 }
