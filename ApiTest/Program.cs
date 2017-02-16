@@ -12,6 +12,14 @@ namespace ApiTest
 {
     internal class Program
     {
+
+        private static string _cleanBase = @"
+delete from Employee;
+delete from Supermarket;
+delete from Store;
+delete from Product;
+delete from Store_product;";
+
         private static void Main(string[] args)
         {
             EnableProfilerAndRunMigrations();
@@ -22,7 +30,7 @@ namespace ApiTest
             {
                 using (var trans = session.BeginTransaction())
                 {
-                    session.CreateSQLQuery("delete from Employee;delete from Store;delete from Product;delete from Store_product;").ExecuteUpdate();
+                    session.CreateSQLQuery(_cleanBase).ExecuteUpdate();
 
                     var address = new Address
                     {
@@ -32,15 +40,15 @@ namespace ApiTest
                         ZipCode = "34000"
                     };
 
-                    var store = new Store { Name = "Store 1", Address = address };
+                    //                    var store = new Store { Name = "Store 1", Address = address };
 
-                    var emp1 = new StoreOwner { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
-                    store.AddEmployee(emp1);
+                    //                    var emp1 = new StoreOwner { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
+                    //                    store.AddEmployee(emp1);
 
                     var emp2 = new Employee { Name = "test", Age = 30, Gender = GenderEnum.Woman };
                     session.Save(emp2);
 
-                    var emp3 = new StockHolder{ Name = "test1", Age = 40, Gender = GenderEnum.Woman };
+                    var emp3 = new StockHolder { Name = "test1", Age = 40, Gender = GenderEnum.Woman };
                     session.Save(emp3);
 
                     var suger = new Product { Name = "Suger" };
@@ -48,15 +56,22 @@ namespace ApiTest
 
                     var flavor = new Product { Name = "Flavor" };
                     session.Save(flavor);
-
-                    store.AddProduct(suger);
-                    store.AddProduct(flavor);
-
-                    session.Save(store);
+                    //
+                    //                    store.AddProduct(suger);
+                    //                    store.AddProduct(flavor);
+                    //
+                    //                    session.Save(store);
 
                     var emp = session.Query<Employee>().ToList();
 
                     emp.ForEach(x => Console.WriteLine(x.ToString()));
+
+                    var supermarket1 = new Supermarket { Name = "Carrefour", Surface = 100, Address = new Address { StreetNumber = 100, Country = "France", Street = "St-Clement-De-Riviere", ZipCode = "34090" } };
+                    session.Save(supermarket1);
+
+                    var stores = session.Query<Store>().ToList();
+
+                    stores.ForEach(x => Console.WriteLine(x.ToString()));
 
                     //                    var store = session.Query<Store>().FirstOrDefault(x => x.Name == "Store 1");
                     //

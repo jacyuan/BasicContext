@@ -51,6 +51,7 @@
     <Compile Include="Domain\StockHolder.cs" />
     <Compile Include="Domain\Store.cs" />
     <Compile Include="Domain\StoreOwner.cs" />
+    <Compile Include="Domain\Supermarket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

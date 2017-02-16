@@ -7,7 +7,7 @@ using NHibernate.Util;
 
 namespace Domain.Domain
 {
-    public class Store : Entity
+    public abstract class Store : Entity
     {
         public virtual string Name { get; set; }
         public virtual IEnumerable<Employee> Employees { get; set; }
