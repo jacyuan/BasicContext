@@ -51,18 +51,23 @@ namespace ApiTest.Infrastructure.Datebase
         {
             var allEntityMapTypes = typeof(Employee).Assembly.GetExportedTypes();
 
+            //build a dico with 
+            // key      : original entity type
+            // value    : mapping class
             var entityTypeMapDico = allEntityMapTypes
-                //for all mapping classes
-                .Where(x => typeof(IEntityAttributesMapper).IsAssignableFrom(x))
-                //build a dico with 
-                // key      : original entity type
-                // value    : mapping class
+                //for all mapping classes, having a generic type defined for mapping, such as : ClassMapping<xxx>
+                .Where(x => 
+                    typeof(IEntityAttributesMapper).IsAssignableFrom(x) 
+                    && x.BaseType != null 
+                    && x.BaseType.GenericTypeArguments.Any()
+                )
                 .ToDictionary(x => x.BaseType.GenericTypeArguments[0], x => x);
 
             var mapper = new ConventionModelMapper();
             mapper.IsRootEntity((type, declared) => IsRootEntityCondition(type));
             mapper.IsEntity((type, declared) => IsEntityCondition(type));
 
+            //add mapping classes seperately by respecting inheritance orders : root classes first, then sub classes
             AddClassMappingsByInheritanceOrder(mapper, entityTypeMapDico, null, IsRootEntityCondition);
 
             var mappings = mapper.CompileMappingForEachExplicitlyAddedEntity();
@@ -70,15 +75,16 @@ namespace ApiTest.Infrastructure.Datebase
             mappings.ForEach(config.AddMapping);
         }
 
-        private static void AddClassMappingsByInheritanceOrder(ConventionModelMapper mapper, IDictionary<Type, Type> entityTypesAndMappingToAdd, Type[] justAddedParentTypes = null, Func<Type, bool> isRootEntity = null)
+        private static void AddClassMappingsByInheritanceOrder(ConventionModelMapper mapper, IDictionary<Type, Type> entityClassesAndMappingsToAdd, Type[] justAddedParentClasses = null, Func<Type, bool> isRootEntity = null)
         {
             #region arg exception
 
             if (mapper == null)
                 throw new ArgumentNullException(nameof(mapper));
 
-            //if nothing has been added to mapper yet
-            if ((justAddedParentTypes == null || !justAddedParentTypes.Any())
+            //if nothing has been added to mapper yet, we then need to have isRootEntity function to determinate root classes
+            //in this case, isRootEntity should be not be null
+            if ((justAddedParentClasses == null || !justAddedParentClasses.Any())
                 && isRootEntity == null)
             {
                 throw new ArgumentNullException(nameof(isRootEntity));
@@ -87,24 +93,24 @@ namespace ApiTest.Infrastructure.Datebase
             #endregion
 
             //stop condition : if nothing left to add, quit
-            if (entityTypesAndMappingToAdd == null || !entityTypesAndMappingToAdd.Any())
+            if (entityClassesAndMappingsToAdd == null || !entityClassesAndMappingsToAdd.Any())
                 return;
 
             var shouldBeAdded = isRootEntity;
 
-            if (justAddedParentTypes != null && justAddedParentTypes.Any())
+            if (justAddedParentClasses != null && justAddedParentClasses.Any())
             {
-                shouldBeAdded = x => justAddedParentTypes.Contains(x.BaseType);
+                shouldBeAdded = x => justAddedParentClasses.Contains(x.BaseType);
             }
 
-            var entitesToAdd = entityTypesAndMappingToAdd.Keys.Where(shouldBeAdded).ToArray();
+            var entitesToAdd = entityClassesAndMappingsToAdd.Keys.Where(shouldBeAdded).ToArray();
 
-            mapper.AddMappings(entityTypesAndMappingToAdd.Where(x => entitesToAdd.Contains(x.Key)).Select(x => x.Value));
+            mapper.AddMappings(entityClassesAndMappingsToAdd.Where(x => entitesToAdd.Contains(x.Key)).Select(x => x.Value));
 
             //recursive
             AddClassMappingsByInheritanceOrder(
                 mapper,
-                entityTypesAndMappingToAdd.Where(kv => !entitesToAdd.Contains(kv.Key)).ToDictionary(x => x.Key, x => x.Value),
+                entityClassesAndMappingsToAdd.Where(kv => !entitesToAdd.Contains(kv.Key)).ToDictionary(x => x.Key, x => x.Value),
                 entitesToAdd
            );
         }
