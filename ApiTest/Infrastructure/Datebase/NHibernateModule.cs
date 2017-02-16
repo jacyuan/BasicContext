@@ -101,13 +101,13 @@ namespace ApiTest.Infrastructure.Datebase
                     shouldBeAdded = x => justAddedParentClasses.Contains(x.BaseType);
                 }
 
-                var classToMap = entityClassesAndMappingsToAdd.Keys.Where(shouldBeAdded).ToArray();
+                var classesToMap = entityClassesAndMappingsToAdd.Keys.Where(shouldBeAdded).ToArray();
 
                 var classesAndMappingsToAddLater = new Dictionary<Type, Type>();
 
                 entityClassesAndMappingsToAdd.ForEach(x =>
                 {
-                    if (classToMap.Contains(x.Key))
+                    if (classesToMap.Contains(x.Key))
                     {
                         mapper.AddMapping(x.Value);
                     }
@@ -119,8 +119,7 @@ namespace ApiTest.Infrastructure.Datebase
 
                 //recursive
                 entityClassesAndMappingsToAdd = classesAndMappingsToAddLater;
-                justAddedParentClasses = classToMap;
-                isRootEntity = null;
+                justAddedParentClasses = classesToMap;
             }
         }
     }
