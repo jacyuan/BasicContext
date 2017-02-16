@@ -20,7 +20,7 @@ namespace Domain.Domain
             if (Store != null)
                 txt.Append($", works in {Store.Name} store");
 
-            return txt.ToString();
+            return txt.AppendLine().ToString();
         }
     }
 

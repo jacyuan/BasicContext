@@ -56,9 +56,9 @@ namespace ApiTest.Infrastructure.Datebase
             // value    : mapping class
             var entityTypeMapDico = allEntityMapTypes
                 //for all mapping classes, having a generic type defined for mapping, such as : ClassMapping<xxx>
-                .Where(x => 
-                    typeof(IEntityAttributesMapper).IsAssignableFrom(x) 
-                    && x.BaseType != null 
+                .Where(x =>
+                    typeof(IEntityAttributesMapper).IsAssignableFrom(x)
+                    && x.BaseType != null
                     && x.BaseType.GenericTypeArguments.Any()
                 )
                 .ToDictionary(x => x.BaseType.GenericTypeArguments[0], x => x);
@@ -84,35 +84,44 @@ namespace ApiTest.Infrastructure.Datebase
 
             //if nothing has been added to mapper yet, we then need to have isRootEntity function to determinate root classes
             //in this case, isRootEntity should be not be null
-            if ((justAddedParentClasses == null || !justAddedParentClasses.Any())
-                && isRootEntity == null)
+            if ((justAddedParentClasses == null || !justAddedParentClasses.Any()) && isRootEntity == null)
             {
                 throw new ArgumentNullException(nameof(isRootEntity));
             }
 
             #endregion
 
-            //stop condition : if nothing left to add, quit
-            if (entityClassesAndMappingsToAdd == null || !entityClassesAndMappingsToAdd.Any())
-                return;
-
-            var shouldBeAdded = isRootEntity;
-
-            if (justAddedParentClasses != null && justAddedParentClasses.Any())
+            //resharper proposes to use while(true) instead of recursive loops
+            while (entityClassesAndMappingsToAdd != null && entityClassesAndMappingsToAdd.Any())
             {
-                shouldBeAdded = x => justAddedParentClasses.Contains(x.BaseType);
+                var shouldBeAdded = isRootEntity;
+
+                if (justAddedParentClasses != null && justAddedParentClasses.Any())
+                {
+                    shouldBeAdded = x => justAddedParentClasses.Contains(x.BaseType);
+                }
+
+                var classToMap = entityClassesAndMappingsToAdd.Keys.Where(shouldBeAdded).ToArray();
+
+                var classesAndMappingsToAddLater = new Dictionary<Type, Type>();
+
+                entityClassesAndMappingsToAdd.ForEach(x =>
+                {
+                    if (classToMap.Contains(x.Key))
+                    {
+                        mapper.AddMapping(x.Value);
+                    }
+                    else
+                    {
+                        classesAndMappingsToAddLater.Add(x.Key, x.Value);
+                    }
+                });
+
+                //recursive
+                entityClassesAndMappingsToAdd = classesAndMappingsToAddLater;
+                justAddedParentClasses = classToMap;
+                isRootEntity = null;
             }
-
-            var entitesToAdd = entityClassesAndMappingsToAdd.Keys.Where(shouldBeAdded).ToArray();
-
-            mapper.AddMappings(entityClassesAndMappingsToAdd.Where(x => entitesToAdd.Contains(x.Key)).Select(x => x.Value));
-
-            //recursive
-            AddClassMappingsByInheritanceOrder(
-                mapper,
-                entityClassesAndMappingsToAdd.Where(kv => !entitesToAdd.Contains(kv.Key)).ToDictionary(x => x.Key, x => x.Value),
-                entitesToAdd
-           );
         }
     }
 }

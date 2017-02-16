@@ -35,8 +35,10 @@ namespace ApiTest
 
                     var emp1 = new StoreOwner { Name = "Yuan", Age = 30, Gender = GenderEnum.Man };
                     store.AddEmployee(emp1);
+
                     var emp2 = new Employee { Name = "test", Age = 30, Gender = GenderEnum.Woman };
                     session.Save(emp2);
+
                     var emp3 = new StockHolder{ Name = "test1", Age = 40, Gender = GenderEnum.Woman };
                     session.Save(emp3);
 
