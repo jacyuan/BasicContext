@@ -89,7 +89,7 @@ namespace ApiTest.Infrastructure.Datebase
 
             #endregion arg exception
 
-            //resharper proposes to use while(true) instead of recursive loops
+            //resharper proposes to use while instead of recursive loops
             while (entityClassesAndMappingsToAdd != null && entityClassesAndMappingsToAdd.Any())
             {
                 var shouldBeAdded = isRootEntity;
