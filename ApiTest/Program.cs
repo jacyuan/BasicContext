@@ -30,6 +30,7 @@ delete from Store_product;";
             {
                 using (var trans = session.BeginTransaction())
                 {
+                    //delete all existing data in base
                     session.CreateSQLQuery(_cleanBase).ExecuteUpdate();
 
                     var address = new Address

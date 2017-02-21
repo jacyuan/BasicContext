@@ -7,6 +7,8 @@ using NHibernate.Util;
 
 namespace Domain.Domain
 {
+    //since the Store hierarchy has been configured as a table per class structure, 
+    //we can set this class to abstract in order to avoid instanciation of this class
     public abstract class Store : Entity
     {
         public virtual string Name { get; set; }

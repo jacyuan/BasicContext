@@ -7,6 +7,7 @@ namespace Domain.Domain
         public virtual float Surface { get; set; }
     }
 
+    //table per class
     public class SupermarketMap : JoinedSubclassMapping<Supermarket>
     {
         public SupermarketMap()
