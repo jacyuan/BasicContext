@@ -16,6 +16,7 @@ namespace ApiTest
         private static string _cleanBase = @"
 delete from Employee;
 delete from Supermarket;
+delete from GroceryStore;
 delete from Store;
 delete from Product;
 delete from Store_product;";

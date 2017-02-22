@@ -1,6 +1,6 @@
-﻿using NHibernate.Mapping.ByCode;
+﻿using System.Text;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
-using System.Text;
 
 namespace Domain.Domain
 {
