@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Helper\MigrationExtension.cs" />
     <Compile Include="Helper\MigratorRunner.cs" />
+    <Compile Include="Migration\Mig_201702211708_AddGroceryStoreTable.cs" />
     <Compile Include="Migration\Mig_201702161550_AddSupermarketTable.cs" />
     <Compile Include="Migration\Mig_201702151611_AddDiscriminatorForEmployee.cs" />
     <Compile Include="Migration\Mig_201702151521_AddAddressToStore.cs" />

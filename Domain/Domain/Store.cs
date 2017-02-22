@@ -7,7 +7,7 @@ using NHibernate.Util;
 
 namespace Domain.Domain
 {
-    //since the Store hierarchy has been configured as a table per class structure, 
+    //since the Store hierarchy has been configured as a table per class structure : subclasses share a same parent table, but have their own table
     //we can set this class to abstract in order to avoid instanciation of this class
     public abstract class Store : Entity
     {

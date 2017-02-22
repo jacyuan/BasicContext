@@ -7,7 +7,7 @@ namespace Domain.Domain
         public virtual float Surface { get; set; }
     }
 
-    //table per class
+    //table per class : subclasses share a same parent table, but have their own table
     public class SupermarketMap : JoinedSubclassMapping<Supermarket>
     {
         public SupermarketMap()

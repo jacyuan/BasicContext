@@ -67,8 +67,11 @@ delete from Store_product;";
 
                     emp.ForEach(x => Console.WriteLine(x.ToString()));
 
-                    var supermarket1 = new Supermarket { Name = "Carrefour", Surface = 100, Address = new Address { StreetNumber = 100, Country = "France", Street = "St-Clement-De-Riviere", ZipCode = "34090" } };
+                    var supermarket1 = new Supermarket { Name = "Carrefour", Surface = 100, Address = new Address { StreetNumber = 100, Country = "France", Street = "St-Clement-De-Riviere", ZipCode = "34000" } };
                     session.Save(supermarket1);
+
+                    var groceryStore1 = new GroceryStore { Name = "StPriestEpicerie", Address = new Address { StreetNumber = 25, Country = "France", Street = "St-Priest", ZipCode = "34090" }, IsFullDayStore = true };
+                    session.Save(groceryStore1);
 
                     var stores = session.Query<Store>().ToList();
 

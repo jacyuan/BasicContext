@@ -47,6 +47,7 @@
     <Compile Include="Domain\EmployeeTypeEnum.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\GenderEnum.cs" />
+    <Compile Include="Domain\GroceryStore.cs" />
     <Compile Include="Domain\Product.cs" />
     <Compile Include="Domain\StockHolder.cs" />
     <Compile Include="Domain\Store.cs" />
