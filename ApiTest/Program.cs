@@ -92,7 +92,7 @@ delete from Store_product;";
             }
 
             Console.WriteLine("finished ...");
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         private static void EnableProfilerAndRunMigrations()
